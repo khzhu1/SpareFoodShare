@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{#{% load static %}#}
+
+{% block main %}
+    <div class="button-div">
+        <button class="btn" onclick="convertCanvasToImage()">Export pdf</button>
+    </div>
+    <div class="dashboard-container" id="dashboard-container">
+        <div class="chart-div" id="chart1"></div>
+        <div class="chart-div" id="chart2"></div>
+        <div class="chart-div" id="chart3"></div>
+        <div class="chart-div" id="chart4"></div>
+    </div>
+
+
+
+{#    <script src="{% static 'js/html2canvas.min.js' %}" type="text/javascript" charset="utf-8"></script>#}
+{#    <script src="js/jspdf.min.js" type="text/javascript" charset="utf-8"></script>#}
+{#    <script src="js/echarts3.js" type="text/javascript" charset="utf-8"></script>#}
+{#    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>#}
+{#    <script type="text/javascript" src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>#}
+
+    <script>
+        //chart1
+        var myChart1 = echarts.init(document.getElementById('chart1'));
+        var option1 = {
+            title: {
+                text: 'Number of users by user type',
+                top: '15',
+                left: 'center'
+            },
+            tooltip:{},
+            series : [
+                {
+                    type: 'pie',    // Pie chart
+                    radius: '55%',  // radius of the pir chart
+                    data:[
+                        {value:{{ iType }}, name:'Individual user'},
+                        {value:{{ bType }}, name:'Business user'}
+                    ]
+                }
+            ],
+            color:['#f5d36c','#529ee4']
+        }
+
+
+        //chart2
+        var myChart2 = echarts.init(document.getElementById('chart2'));
+        var listMonth = {{ monthList|safe }}
+        var amountList = {{ amountList|safe }}
+        var option2 = {
+            grid: {
+                top: '20%',
+                left: '10%',  // grid layout to avoid only part of x-axis can be displayed
+                right: '10%',
+                bottom: '15%',
+              },
+            tooltip:{}, //move mouse to show data
+            title: {
+                text: 'Number of orders & Sales amount by month in 2022',
+                top: '15',
+                left: 'center'
+            },
+            legend: {
+                data:['Number of orders', 'Sales amount'],
+                top: '45',
+                left: 'center'
+            },
+            xAxis: {
+                type:'category',
+                axisLabel: {
+                    rotate: 40,
+                    fontSize: 8,
+                },
+                data: ["Jan","Feb","Mar","April","May","June","July", "Aug","Sep","Oct","Nov","Dec"]
+            },
+            yAxis: {type:'value'},
+            series: [{
+                name: 'Number of orders',
+                type: 'line',
+                data: listMonth,
+                lineStyle : {
+                    color : '#d256b6'
+                },
+                itemStyle : {
+                    color : '#d256b6'
+                }
+            },{
+                name: 'Sales amount',
+                type: 'line',
+                data: amountList,
+                lineStyle : {
+                    color : '#4d8bfc'
+                },
+                itemStyle : {
+                    color : '#4d8bfc'
+                }
+            }]
+        };
+
+
+        //chart3
+        var myChart3 = echarts.init(document.getElementById('chart3'));
+
+        var list1 = {{ cList|safe }}
+        var list2 = {{ cName|safe }}
+        var data_cList = []
+
+        for (let i=0; i<{{ cList }}.length ; i++){
+            data_cList.push({value:list1[i], name:list2[i]})
+        }
+        var option3 = {
+            title: {
+                text: 'Number of products by category',
+                top: '15',
+                left: 'center'
+            },
+
+            tooltip:{},
+            series : [
+                {
+                    type: 'pie',
+                    radius: '55%',
+                    data:data_cList
+                }
+            ]
+        };
+
+        //chart4
+        var myChart4 = echarts.init(document.getElementById('chart4'));
+        var oList = {{ orderListWithCate|safe }}
+        var pList = {{ productListWithCate|safe }}
+        var option4 = {
+            grid: {
+                top: '20%',
+                left: '10%',
+                right: '10%',
+                bottom: '15%',
+              },
+            title: {
+                text: 'Number of products and orders by category',
+                top: '15',
+                left: 'center'
+            },
+            tooltip: {},
+            legend: {
+                data:['Number of products','Number of orders'],
+                top: '45',
+                left: 'center'
+                },
+            xAxis: {
+                type:'category',
+                axisLabel: {
+                    rotate: 40,
+                    fontSize: 8,
+                },
+                data: ["Fresh Fruit","Fresh Vegetable","Meat","Frozen Food","Food Cupboard","Beer, Wine & Spirits","Bakery", "Milk & Eggs","Drinks","Others"]
+            },
+            yAxis: {type:'value'},
+            series: [{ //bar1
+                name: 'Number of products',
+                type: 'bar',
+                data: pList,
+                itemStyle:{ //color1
+                    normal:{
+                        color: '#e88b6c'
+                    }
+                }
+            },
+            { //ba2
+                name: 'Number of orders',
+                type: 'bar',
+                data: oList,
+                itemStyle:{ //color2
+                    normal:{
+                        color: '#9ed7bd'
+                    }
+                }
+            }
+            ]
+        };
+
+
+        // show charts
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
+        myChart3.setOption(option3);
+        myChart4.setOption(option4);
+
+
+
+        //resize every chart
+        var chartsArr=[];
+        chartsArr.push(myChart1);
+        chartsArr.push(myChart2);
+        chartsArr.push(myChart3);
+        chartsArr.push(myChart4);
+        window.onresize=function(){
+            for(var i=0;i<chartsArr.length;i++){
+                chartsArr[i].resize();
+            }
+        }
+
+
+
+        function convertCanvasToImage() {
+            html2canvas(document.getElementById("dashboard-container"), {
+               onrendered: function(canvas) {
+                   createPDFObject(canvas.toDataURL("image/jpeg"));
+                   }
+            });
+        }
+        function createPDFObject(imgData) {
+            var doc = new jsPDF('l', 'pt'); //l:landscape.(Default:portrait.) Default paper size:a4.
+            doc.addImage(imgData, 70, 10, 720, 575, 'img'); // a4 pixel size: 842*595.
+            doc.save('charts.pdf');
+        }
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,171 @@
+<!doctype html>
+
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport"
+              content = "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
+        <title>Test</title>
+        <!-- <script src = "js/jquery-3.6.0.js"></script> -->
+
+    
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        
+        {% block css %}{% endblock %}
+    </head>
+
+
+    <body>
+        <div class="top">
+            <div class="top-content">
+                <div class="top-text">
+                    SpareFoodShare
+                </div>
+
+
+                <div class="add-icon">
+                    {% if request.user.is_authenticated %}
+                        <img src={% static 'icon/add.png' %} onclick="location.href='{% url 'addItem' %}'" width="40" height="40"/>
+                    {% else%}
+                        <img src={% static 'icon/add.png' %} onclick="location.href='{% url 'loginUser' %}'" width="40" height="40"/>
+                    {% endif %}
+                </div>
+                {% if request.user.is_authenticated %}
+                   <div class="sign-button">
+                        <button onclick="location.href='{% url 'logoutUser' %}'"><i>Sign out</i></button>
+                   </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class = "content">
+            <!--left menu title-->
+            <div class = "content-left">
+                {% if request.user.is_authenticated %}
+                    <div class="img-profile">
+{#                        <img src="{{ user.userprofile.user_image.url}}" width="70" height="70"/>#}
+                    </div>
+                    <div class = "left-title">
+                         <p>Hi, {{ user}}</p>
+                    </div>
+                <br>
+                {% else%}
+                    <div class = "left-title">
+                        <p> Hi, <u><a onclick="location.href='{% url 'loginUser' %}'">Sign Up</a></u></p>
+                    </div>
+                {% endif %}
+                <!--line-->
+                <div class = "seg"></div>
+
+                <!--left menu-->
+                <div class = "nav">
+                    <!--each menu-->
+                    <div class = "nav-menu">
+                        <!--main title-->
+{#                        <div class = "nav-title">Home</div>#}
+                        <div class = "nav-title" onclick="location.href='{% url 'homePage' %}'">Home</div>
+                        <!--sub title-->
+                        <!-- <div class = "nav-content">
+                            <a href = "#">Food</a>
+                            <a href = "#">Drinks</a>
+                        </div> -->
+                    </div>
+
+                    <!--each menu-->
+                    <div class = "nav-menu">
+                        <!--main title-->
+{#                        <div class = "nav-title">Account</div>#} 
+                        <div class = "nav-title" onclick="location.href='{% url 'userProfile' %}'">Account</div>
+                    </div>
+
+                    <div class = "nav-menu">
+                        <!--main title-->
+                        <div class = "nav-title" id="chatapi" onclick= "location.href='{% url 'chatindex' %}'">Message</div>
+                    </div>
+
+                    <div class = "nav-menu">
+                        <!--main title-->
+                        <div class = "nav-title">My Listing</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--right content-->
+            
+            <div class = "content-right" id= "right">
+                {% block content %}
+                <div class = "product_card" onclick="location.href='{% url 'viewItem' %}'">
+                    <div class="product_img">
+                        <img src="./static/product/costa.jpg" width="110" height="110"/>
+                    </div>
+                    <div class="product_info">
+                        <div class="product_title">
+                            <p>Costa Blend Coffee Beans 200g</p>
+                        </div>
+
+                        <div class="product_feature">
+                            <div class="feature_icon">
+                                <img src="./static/icon/user.png" width="20" height="20"/>
+                            </div>
+                            <div class="feature_info">
+                                <p>&nbsp;Mary</p>
+                            </div>
+                        </div>
+
+                        <div class="space">
+                            <p>&nbsp;&nbsp;</p>
+                        </div>
+
+                        <div class="product_feature">
+                            <div class="feature_icon">
+                                <img src={% static 'icon/star.png' %} width="27" height="27"/>
+                            </div>
+                            <div class="feature_info">
+                                <p>5.0</p>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+
+                        <div class="product_feature">
+                            <div class="feature_icon">
+                                <img src="./static/icon/distance.png" width="22" height="22"/>
+                            </div>
+                            <div class="feature_info">
+                                <p>0.8km</p>
+                            </div>
+                        </div>
+
+                        <div class="space">
+                            <p>&nbsp;&nbsp;</p>
+                        </div>
+
+                        <div class="product_feature">
+                            <div class="feature_icon">
+                                <img src="./static/icon/eye.png" width="22" height="22"/>
+                            </div>
+                            <div class="feature_info">
+                                <p>&nbsp;47</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endblock %}
+            </div>
+
+        </div>
+
+        
+    {% for message in messages %}
+                <p style="color: #ff0000">{{ message }}</p>
+            {% endfor %}
+    </body>
+</html>
+

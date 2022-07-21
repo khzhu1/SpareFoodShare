@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div>
+        <div class="search-div">
+				<form class="layui-form layui-col-md12 we-search">
+					<div style="display: inline-block">
+						<input type="text" name="username" placeholder="Please input an email address" autocomplete="off" class="search-input" />
+					</div>
+					<button class="btn">
+						Search
+					</button>
+				</form>
+        </div>
+
+{#        <div class="delete-add-div">#}
+{#            <button class="btn">Bulk delete</button>#}
+{#            <button class="btn" onclick="">Add</button>#}
+{#        </div>#}
+
+
+        <table class="table-style" id="memberList">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="selectall-checkbox" />
+{#                        <div class="layui-form-checkbox" lay-skin="primary">#}
+{#                            <i class="layui-icon">&#xe605;</i>#}
+{#                        </div>#}
+                    </th>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>User Type</th>
+                    <th>Join date</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+
+
+
+            <tbody id="tbody">
+                {% for user in users %}
+                <tr data-id="1">
+                    <td>
+                        <input type="checkbox"/>
+                    </td>
+                    <td>{{ user.user_form.id }}</td>
+                    <td>{{ user.user_form.username }}</td>
+                    <td>{{ user.user_form.first_name }}</td>
+                    <td>{{ user.user_form.last_name }}</td>
+                    <td>{{ user.user_form.email }}</td>
+                    <td>{{ user.user_type }}</td>
+                    <td>29/Mar/2022</td>
+                    <td>
+                        <a href="/administration/edit/{{ user.id }}/profile/" style="margin-right: 8px;">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        <a id="confirmDelete" onclick="if(confirm('If you choose to delete account\'{{ user.user_form.username }}\', the products posted by this account will also be deleted. Are you sure?'))
+                            window.location.href='/administration/user/delete/?del_username={{ user.user_form.username }}'">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="page-div">
+            <div>
+                <a class="prev" href="">&lt;&lt;</a>
+                <a class="current" href="">1</a>
+{#                <a class="num" href="">2</a>#}
+{#                <a class="num" href="">3</a>#}
+{#                ...#}
+{#                <a class="num" href="">489</a>#}
+                <a class="next" href="">&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<script>
+    var selectall = document.getElementById('selectall-checkbox'); // Get the select all checkbox in <thead>
+    var checkboxes = document.getElementById('tbody').getElementsByTagName('input'); // Get all checkboxes in <tbody>
+    selectall.onclick = function () {
+        // this.checked : true - the checkbox is selected, false - unselected
+        for(var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = this.checked;
+        }
+    }
+
+    // If every checkbox in <tbody> is selected, the select all checkbox in <thead> will be automatically selected.
+    // Bind a click event to all the checkboxes in <tbody>.
+    // When any checkbox in <tbody> is selected, run the for loop to check if there are any unselected checkboxes.
+    for(var i = 0; i < checkboxes.length; i++) {
+        // for each checkbox in <tbody>
+        checkboxes[i].onclick = function () {
+            // flag - if the select all checkbox is selected
+            var flag = true;
+            for(var i = 0; i < checkboxes.length; i++) {
+                if (!checkboxes[i].checked) {
+                    // selectall.checked = false;
+                    flag = false;
+                    break; // Exit the for loop.
+                }
+            }
+            selectall.checked = flag;
+        }
+}
+
+
+</script>
+{% endblock %}

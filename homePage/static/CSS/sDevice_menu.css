@@ -1,0 +1,50 @@
+    /* menu appearance*/
+    #menu {
+        position: relative;
+        color: #999;
+
+        width: 200px;
+        padding: 10px;
+        margin: auto;
+        font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+        text-align: center;
+        border-radius: 4px;
+        background: white;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      /* just for this demo */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .4s;
+    }
+    #menu:after {
+        position: absolute;
+        top: -15px;
+        left: 76%;
+        content: "";
+        display: block;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 20px solid white;
+    }
+    #menu ul, li, li a {
+        list-style: none;
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+    #menu li a {
+        padding: 5px;
+        color: #888;
+        text-decoration: none;
+        transition: all .2s;
+    }
+    #menu li a:hover,
+    #menu li a:focus {
+        background: #ace0f9;
+        color: #fff;
+    }
+
+
+    /* demo styles */
+    /*body { margin-top: 3em; background: #eee; color: #555; font-family: "Open Sans", "Segoe UI", Helvetica, Arial, sans-serif; }*/
+    /*p, p a { font-size: 12px;text-align: center; color: #888; }*/

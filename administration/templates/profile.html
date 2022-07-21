@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{#    <div>#}
+{#        <div class="heading">#}
+{#            MY INFO#}
+{#        </div>#}
+{##}
+{#    </div>#}
+
+    <h2 >Edit Profile</h2>
+    <hr />
+    <form action = "/administration/edit/{{ user.id }}/profile/" method="post">
+        <table class="profile-table"  >
+            <tr >
+                <td>ID</td>
+                <td>
+                    {{ user.id }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>Username</td>
+                <td>
+                    {{ user.username }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>First Name</td>
+                <td>
+                    <input type="text" name="first_name" value="{{ user.first_name }}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Last Name</td>
+                <td>
+                    <input type="text" name="last_name" value="{{ user.last_name }}"/>
+                </td>
+            </tr>
+
+
+{#            <tr>#}
+{#                <td>Phone Number</td>#}
+{#                <td>#}
+{#                    <input type="text" name="phone" />#}
+{#                    <a href="">Edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+            <tr>
+                <td>Email Address</td>
+                <td>
+                    <input type="text" name="email" value="{{ user.email }}"/>
+                </td>
+            </tr>
+{#            <tr>#}
+{#                <td>Password</td>#}
+{#                <td>#}
+{#                    <input type="text" name="password"  value="{{ user.password1 }}"/>#}
+{#                    <a href="">Edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+        </table>
+
+            <input class="btn" type="submit" name="save" value="Save" />
+
+
+		</form>
+
+
+{% endblock %}

@@ -1,0 +1,227 @@
+
+    /*Compatible browsers*/
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Geneva;
+    }
+
+    .top {
+        //position: fixed;
+        width: 100%;
+        height: 60px;
+        background-image: linear-gradient(to left, #fff1eb 0%, #ace0f9 100%);
+        /*background-color: #3C5A9C;*/
+        /* linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);*/
+    }
+
+    .top-text {
+        color: black;
+        text-align: center;
+        margin-left: 5%;
+        margin-top: 3%;
+
+        font-size: 25px;
+        font-style: oblique;
+        font-weight: 500;
+    }
+
+    .top-content{
+        width: 20%;
+        /*margin: 100px auto;*/
+        display: flex;
+
+    /*border: 1px solid red;*/
+    }
+
+    .top-content button{
+        float: right;
+        flex: 1;
+        width: 100px;
+        height: 30px;
+        background-color: gray;
+        color: white;
+        border-style: none;
+        outline: none;
+        margin-top: 4%;
+
+    }
+    .top-content button i{
+        font-style: normal;
+    }
+    .top-content button:hover{
+        font-size: 16px;
+    }
+
+
+    .content {
+        //margin-top: 60px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .content-left {
+        width: 17%;
+        height: 100%;
+        padding-bottom: 100%;
+        //background-color: #CDD0D6;
+        background-image: linear-gradient(to right, #ace0f9 0%, #ffffff 100%);
+        float: left;
+    }
+
+    .left-title {
+        width: 100%;
+        height: 50px;
+        text-align: left;
+        margin-left: 30px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .left-title > a {
+        display: block;
+        width: 100%;
+        height: 50px;
+        line-height: 60px;
+        text-align: left;
+        color: black;
+        /*去掉a下默认下划线*/
+        text-decoration: none;
+    }
+
+    /*分割线*/
+    .seg {
+        height: 1px;
+        width: 80%;
+        background-color: black;
+        margin-left: 10%;
+        margin-top: 10px;
+    }
+
+    .nav {
+        /*上下5,左右0*/
+        margin: 5px 0;
+    }
+
+    /*菜单项主标题*/
+    .nav-title {
+        height: 40px;
+        width: 100%;
+        color: black;
+        text-align: left;
+        margin-left: 50px;
+        line-height: 60px;
+        cursor: pointer;
+    }
+
+    /*子标题内容区*/
+    .nav-content {
+        width: 100%;
+        height: 100%;
+        background-color: #0C1119;
+    }
+
+    /*子标题的样式*/
+    .nav-content > a {
+        display: block;
+        width: 100%;
+        height: 30px;
+        color: #CCCCCC;
+        text-decoration: none;
+        text-align: center;
+        line-height: 30px;
+        font-size: 13px;
+    }
+
+    /*子标题鼠标经过时的改变颜色*/
+    .nav-content > a:hover {
+        color: #FFFFFF;
+        background-color: #12040c;
+    }
+
+    .img-profile {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .add-icon {
+        margin-left: 250%;
+        margin-top: 2%;
+    }
+
+    .sign-button {
+        color: white;
+        margin-left: 3%;
+        margin-top: 2%;
+    }
+
+    .content-right {
+        width: 83%;
+        height: 100%;
+        background-color: #ffffff;
+        text-align: center;
+        padding-bottom: 100%;
+        float: left;
+    }
+
+    .product_card {
+        cursor: pointer;
+        width: 400px;
+        height: 180px;
+        margin: 30px;
+
+        border-radius: 15px;
+        border: 1px solid grey;
+        box-shadow: 0 2px 4px 0;
+        border-top: none;
+        border-left: none;
+        float: left;
+    }
+
+    .product_card:hover{
+        margin: 35px;
+        box-shadow: 0 2px 8px 0;
+    }
+
+    .product_img {
+        width: 30%;
+        align-content: center;
+        line-height: 180px;
+        float: left;
+    }
+
+    .product_img img {
+        vertical-align: middle;
+    }
+
+    .product_info {
+        text-align: center;
+        float: left;
+    }
+
+    .product_title {
+        height: 80px;
+        font-size: 15px;
+        line-height: 80px;
+    }
+
+    .product_feature {
+        float: left;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .feature_icon {
+        float: left;
+        height: 40px;
+    }
+
+    .feature_info {
+        float: left;
+        font-size: 5px;
+        margin-left: 1px;
+    }
+
+    .space {
+        float: left;
+    }

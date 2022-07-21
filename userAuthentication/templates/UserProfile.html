@@ -1,0 +1,204 @@
+{% extends 'HomePage.html' %}
+{% load static %}
+        {% block css %}
+            <link rel="stylesheet" href="{% static './UserProfile.css' %}">
+            <link rel="stylesheet" href="{% static './sMobileEditProfile.css' %}">
+        {% endblock css%}
+
+
+            {%block content%}
+        <div class="user_profile">
+            <div class="profile">
+                <!-- panel -->
+                <div class="panel">
+                    <!-- fixed information-->
+                    <div class="user-heading round">
+                        <!-- fixed information-->
+                        <div class="item-details">
+{#                            <div class="upload_user-photo">#}
+{#                                <div class="upload_user-photo">#}
+{#                                    <img id="image-preview" src="../static/temp1.jpg" onclick="document.getElementById('fileUpload').click()" width="120" height="120"/>#}
+{#                                </div>#}
+{#                                <div class="upload_hint">#}
+{#                                    <input type="file" id="fileUpload" style="display: none" accept="image/*"/>#}
+{#                                </div>#}
+{#                            </div>#}
+                        <script type="text/javascript" src="{% static './frame.js' %}"></script>
+                    </div>
+                        <!-- Full name -->
+                        <h1>{{ user }} </h1>
+                        <!-- Email -->
+                        <p>{{ user.email }}</p>
+                        <p style="display: inline;">ID: {{ user.id }}</p>
+{#                        <p style="display: inline;">Type: Individual{{ user.user_type }}</p>#}
+                    </div>
+                    <div class="panel-body bio-graph-info">
+                        <!-- <h1>Information</h1> -->
+                        <div class="row" id="editProfile">
+                            <div class="bio-row">
+                                <p><span>First name: </span> {{ user.first_name }}</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Last Name: </span> {{ user.last_name }}</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Email: </span> {{ user.email }}</p>
+                            </div>
+                            <div class="edit-button">
+                                <p><a href="/user/editfile/{{ user.id }}">Edit Profile</a></p>
+                           </div>
+                        </div>
+                        <div class="row" id="saveProfile" style="display: none">
+                            <div class="bio-row">
+                                <p><span>First name: </span>
+                                <input type="text" value="{{ first_name }}" class="inputblock"> </p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Last Name:  </span>
+                                <input type="text" value="{{ last_name }}" class="inputblock"></p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Email:  </span>
+                                <input type="text" value="{{ email }}" class="inputblock"></p>
+                            </div>
+                            <div class="bio-row">
+{#                                <p><span>Mobile: </span>#}
+{#                                <input type="text" value="{{ phone }}" class="inputblock"></p>#}
+{#                            </div>#}
+                            <div class="save-button">
+                                <input class="btn" type="submit" name="save" value="Save" />
+                           </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+
+                </div>
+        <div class="container" id="addItem" style="display: none; position: absolute; width: 60%; left: 25%; top:10%; padding: 3%">
+            <div class="close_icon">
+                <img src="../static/icon/close.png" onclick="closeAdd();" width="40" height="40"/>
+            </div>
+            <br>
+            <div class="title">Add Item</div>
+            <div class="content">
+
+                <form action="/addItem" method="POST" name="itemForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="item-details">
+                        <!--
+                            Upload photos of item. Max: 1.
+                        -->
+                        <div class="upload_photo">
+                            <div class="upload_photo">
+                                <img id="image-preview" src="../static/temp1.jpg" onclick="document.getElementById('fileUpload').click()" width="120" height="120"/>
+                                 onclick="document.getElementById('fileUpload').click()" width="120" height="120"/>
+                            </div>
+                            <div class="upload_hint">
+                                <label id="info">Add a photo to show your item</label>
+                                <input type="file" id="fileUpload" style="display: none" accept="image/*" name="product_img"/>
+                            </div>
+                        </div>
+
+                        <script type="text/javascript" src="./static/JS/frame.js"></script>
+
+                        <div class="input-box">
+                            <span class="details">Title</span>
+                            <input type="text" name="title" placeholder="Enter name of your item" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Description</span>
+                            <input type="text" name="description" placeholder="Some details about your item" required>
+                        </div>
+
+
+                        <div class="input-box">
+                            <span class="details">Price</span>
+                            <input type="text" name="price" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Please choose the visibility of your item:</label>
+                            <select name="visibility">
+                                <option value="0">Show to all users</option>
+                                <option value="1">Just show to me</option>
+                            </select>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Please choose the category:</label>
+                            <select name="category">
+                                <option value="1">Fresh Fruit</option>
+                                <option value="2">Fresh Vegetable</option>
+                                <option value="3">Meat</option>
+                                <option value="4">Frozen Food</option>
+                                <option value="5">Food Cupboard</option>
+                                <option value="6">Beer, Wine & Spirits</option>
+                                <option value="7">Bakery</option>
+                                <option value="8">Milk & Eggs</option>
+                                <option value="9">Drinks</option>
+                                <option value="10">Others</option>
+                            </select>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Expire Date</span>
+                            <input type="date" value="2022-05-01" name="expire_date"/>
+{#                            <input type="text" name="expireDate" placeholder="YYYY-MM-DD" required>#}
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Set pickup location</span>
+                            <input type="text" name="postcode" placeholder="Enter postcode to find address" required>
+                            <div class="find-button">
+                                <input type="button" name="findAddress" value="Use Current Location">
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="centered structure">
+                            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3750.6262049261427!2d-1.4819288434494762!3d53.3814158983215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48797881e28b3e81%3A0x611c9522ca2169ed!2sThe%20Diamond!5e0!3m2!1sen!2suk!4v1647313794386!5m2!1sen!2suk"
+                                    width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                        -->
+
+                    </div>
+
+                    <div class="button">
+                        <input type="submit" value="Submit">
+                    </div>
+
+            </form>
+        </div>
+    <script>
+        var additem = document.getElementById('addItem');
+        console.log(additem)
+        //pop-up additem windows
+        function popAdd() {
+            //tap 'add' pop-up additem windows and mask layer
+            additem.style.display = "block";
+        }
+
+        //close the window
+        function closeAdd() {
+            additem.style.display = "none";
+        }
+
+        var toedit = document.getElementById('editProfile')
+        var tosave = document.getElementById('saveProfile')
+        function edit() {
+            toedit.style.display = 'none';
+            tosave.style.display = 'flex';
+        }
+
+        function save() {
+            toedit.style.display = 'flex';
+            tosave.style.display = 'none';
+        }
+
+
+
+    </script>
+
+            {% endblock %}

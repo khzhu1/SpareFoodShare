@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+    <div class = "content-left" id="content-left">
+      <h1>Welcome to <br> Food Share</h1>
+      <br>
+      <h2>Join us, start sharing</h2>
+    </div>
+    <div class="container">
+        <div class="title">Login</div>
+        <div class="content">
+
+          {% if isNew %}
+            <form action="/user/login/{{ user.id }}" method="POST">
+          {% else %}
+            <form  method="POST">
+          {% endif %}
+
+            {% csrf_token %}
+            <div class="user-details">
+              <div class="input-box">
+                <span class="details">Username</span>
+                <input type="text" name="username" placeholder="Enter your username" required>
+              </div>
+              <div class="input-box">
+                <span class="details">Password</span>
+                <input type="password" name="password" placeholder="Enter your password" required>
+              </div>
+
+              <div class="input-box">
+                {% if isNew %}
+                    <span class="details">Email Verification</span>
+                    <div id="popup1" class="overlay" style="display: block">
+                        <div class="popup">
+                            <h3>Dear user</h3>
+                            <a class="close" href="#" onclick="document.getElementById('popup1').style.display='none';">&times;</a>
+                            <div class="content">
+                                It's your first time to login, please enter the verification code received by your email.
+                            </div>
+                        </div>
+                    </div>
+{#                    <div class=hint-text">#}
+{#                        <p>It's the first time to login, please enter the verification code received by your email.</p>#}
+{#                    </div>#}
+                    <input type="text" name="code" required>
+                {% endif %}
+              </div>
+
+            </div>
+              {% for message in messages %}
+                        <p style="color: red">{{ message }}</p>
+              {% endfor %}
+            <div class="button">
+              <input type="submit" value="log in">
+            </div>
+                <p class="textSignIn">Don't have an account?
+                    <a class="linkSignIn" href="./register">Register now</a>
+                </p>
+          </form>
+        </div>
+      </div>
+</body>
+<script>
+{#  Adaptive window  #}
+      var w = window.innerWidth;
+      var mobcon = document.getElementById("content-left");
+      console.log(w);
+      if (w <= 1200){
+        mobcon.style.display = "none";
+      }else{
+        mobcon.style.display = "block";
+        }
+
+      function myFunction() {
+
+        console.log("111");
+
+      }
+</script>
+</html>

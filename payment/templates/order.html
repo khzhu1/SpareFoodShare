@@ -1,0 +1,187 @@
+{% extends 'HomePage.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/orderblock.css' %}">
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+                                <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
+{% endblock css %}
+
+{% block content %}
+
+<div class="text-uppercase">My recent orders</div>
+<style>
+
+.modal-body {
+background-color: #fff;
+border-color: #fff;
+
+}
+
+
+.close {
+color: #000;
+cursor: pointer;
+}
+
+.close:hover {
+color: #000;
+}
+
+
+.theme-color{
+
+color: #004cb9;
+}
+hr.new1 {
+border-top: 2px dashed #fff;
+margin: 0.4rem 0;
+}
+
+
+.btn-primary {
+color: #fff;
+background-color: #004cb9;
+border-color: #004cb9;
+padding: 12px;
+padding-right: 30px;
+padding-left: 30px;
+border-radius: 1px;
+font-size: 17px;
+}
+
+
+.btn-primary:hover {
+color: #fff;
+background-color: #004cb9;
+border-color: #004cb9;
+padding: 12px;
+padding-right: 30px;
+padding-left: 30px;
+border-radius: 1px;
+font-size: 17px;
+}
+</style>
+{% for order in orders %}
+<div class="order my-3 bg-light">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="d-flex flex-column justify-content-between order-summary">
+                <div class="d-flex align-items-center">
+                    <div class="text-uppercase">Order ID: {{order.order.order_id}}</div>
+                    <div class="blue-label ms-auto text-uppercase">paid</div>
+                </div>
+                <div class="fs-8">£ {{order.order.total_paid}} </div>
+                <div class="fs-8">{{order.order.created}}</div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                <div class="status">Status : Paid</div>
+                <div>
+
+                    <button type="button" class="btn btn-primary launch" data-toggle="modal"
+                        data-target="#staticBackdrop{{order.id}}">  Get information
+                    </button>
+                    
+
+                    <div class="modal fade" id="staticBackdrop{{order.id}}" data-backdrop="static" data-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog" id="{{order.id}}">
+                            <div class="modal-content" id="{{order.id}}">
+                                <div class="modal-body ">
+                                    <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i>
+                                    </div>
+
+                                    <div class="px-4 py-5">
+                                        <h5 class="text-uppercase">Seller: {{order.product.product_info.user_name}}</h5>
+                                        <h7 class="text-uppercase">where to get:
+                                            {{order.product.product_info.product_location}}</h7> <br>
+                                        <small>Payment Time: {{order.order.created}}</small>
+                                        <div class="mb-3">
+                                            <hr class="new1">
+
+                                        </div>
+                                        <small>Order ID: {{order.order.order_id}}</small>
+                                        <h4 class="mt-5 theme-color mb-5">Thanks for your order</h4>
+
+
+                                        <span class="theme-color">Payment Summary</span>
+                                        <div class="mb-3">
+                                            <hr class="new1">
+
+                                        </div>
+
+                                        <div class="d-flex justify-content-between">
+                                            <span class="font-weight-bold">{{order.product.product_info.product_name}}(Qty:1)</span>
+                                            <span class="text-muted">£ {{order.product.product_info.product_price}}</span>
+                                        </div>
+
+
+                                        <div class="d-flex justify-content-between">
+                                            <small>Tax</small>
+                                            <small>0.00</small>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <span class="font-weight-bold">Total</span>
+                                            <span class="font-weight-bold theme-color">£ {{order.order.total_paid}}</span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#RefundModal{{order.id}}">
+                        Refund
+                    </button>
+                      
+                      <!-- Modal for refund-->
+                      <div class="modal fade" id="RefundModal{{order.id}}" tabindex="-1" role="dialog" aria-labelledby="RefundLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Order ID: {{order.order.order_id}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h5> Seller: {{order.product.product_info.user_name}}</h5>
+                              <h5> Refund Amount: £ {{order.order.total_paid}}</h5>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary" id="re{{order.id}}"> Refund</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript'
+    src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+<script>
+    document.getElementById("re{{order.id}}").onclick = function () {
+        $.ajax({
+            url: '{% url 'refund' %}',
+            type: 'POST',
+            data: {
+                order_key: '{{order.order.order_key}}',
+                action: 'post',
+            },
+            success: function (data) {
+                window.location.reload();
+            }
+        });
+    };
+</script>
+{% endfor %}
+
+{% endblock content %}

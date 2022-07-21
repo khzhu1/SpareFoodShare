@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div>
+        <div class="search-div">
+				<form class="layui-form layui-col-md12 we-search">
+					<div style="display: inline-block">
+						<input class="search-input" placeholder="Seller Id" name="start" id="start">
+					</div>
+                    <div style="display: inline-block">
+						<input class="search-input" placeholder="Product Name">
+					</div>
+					<button class="btn" lay-submit="" lay-filter="sreach">
+						Search
+					</button>
+				</form>
+        </div>
+
+        <div class="button-div">
+            <button class="btn" onclick="popDiv()">Expired email reminder</button>
+        </div>
+
+
+
+        <table class="table-style" id="memberList">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="selectall-checkbox"/>
+                    </th>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Seller</th>
+                    <th>Price</th>
+                    <th>Expiry Date</th>
+                    <th>Pickup Location</th>
+                    <th>Categories</th>
+                    <th>Visibility</th>
+                    <th>Sale Status</th>
+                    <th>Expiry Status</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+
+            <tbody id="tbody">
+                {% for item in products %}
+                    <tr data-id="1">
+                        <td>
+                            <input type="checkbox"/>
+                        </td>
+
+                        <td>{{ item.product_id }}</td>
+                        <td>{{ item.product_info.product_name }}</td>
+                        <td>{{ item.product_info.user_name }}</td>
+                        <td>￡{{ item.product_info.product_price }}</td>
+                        <td>{{ item.product_info.product_expiryDate }}</td>
+                        <td>{{ item.product_info.product_location }}</td>
+                        <td>{{ item.product_category }}</td>
+
+                        {% if item.product_info.product_visibility == True %}
+                            <td>public</td>
+                        {% else %}
+                            <td>private</td>
+                        {% endif %}
+
+                        {% if item.product_info.product_sold == True %}
+                            <td>Sold</td>
+                        {% else %}
+                            <td>Selling</td>
+                        {% endif %}
+
+                        {% if item.product_info.product_checkExpired == True %}
+                            <td>Fresh</td>
+                        {% else %}
+                            <td>Expired</td>
+                        {% endif %}
+
+
+                        <td>
+                            <a href="/administration/edit/{{ item.product_id }}/product/" style="margin-right: 8px;">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                            <a id="confirmDelete" onclick="if(confirm('Do you confirm to delete product \'{{ item.product_info.product_name }}\'?'))
+                            window.location.href='{% url 'product_delete' %}?del_item={{ item.product_id }}'">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="page-div">
+            <div>
+                <a class="prev" href="">&lt;&lt;</a>
+                <a class="current" href="">1</a>
+{#                <a class="num" href="">2</a>#}
+{#                <a class="num" href="">3</a>#}
+{#                ...#}
+{#                <a class="num" href="">489</a>#}
+                <a class="next" href="">&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+
+
+{#  pop up a window to send emails#}
+    <div class="pop-reminder-div" id="pop-reminder-div">
+{#        <button style="border: none;background-color: transparent;">#}
+{#            <i class="fa fa-times-circle-o fa-lg" aria-hidden="true" onclick="closeAdd();"></i>#}
+{#        </button>#}
+        <h4>Products near expiry dates</h4>
+        <table style="margin: 20px auto; ">
+            <thead>
+                <tr>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Expiry Date</th>
+                    <th>Seller</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in product_list %}
+                    <tr>
+                        <td>{{ i.info_id }}</td>
+                        <td>{{ i.product_name }}</td>
+                        <td>{{ i.product_expiryDate }}</td>
+                        <td>{{ i.user_name }}</td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        <h4 class="reminderTip">Send reminder emails to these sellers?</h4>
+        <div class="yes-cancel-buttons">
+            <button class="btn" onclick="checkExpiry()">Yes</button>
+            <button class="cancelBtn" onclick="closeDiv()">Cancel</button>
+        </div>
+    </div>
+    {#    mask layer shown when poping up anadd user window#}
+    <div class="mask-layer" id="mask-layer"></div>
+
+
+
+
+    <script>
+
+        var popupDiv = document.getElementById('pop-reminder-div');
+        var maskLayer = document.getElementById('mask-layer');
+        function popDiv() {
+            // pop window
+            popupDiv.style.display = "block";
+            maskLayer.style.display = "block";
+        }
+
+        // close window
+        function closeDiv() {
+            popupDiv.style.display = "none";
+            maskLayer.style.display = "none";
+        }
+
+        function checkExpiry() {
+            window.location.href = "{% url 'product_expiry_notice' %}"
+        }
+
+
+        //select all
+        var selectall = document.getElementById('selectall-checkbox'); // Get the select all checkbox in <thead>
+        var checkboxes = document.getElementById('tbody').getElementsByTagName('input'); // Get all checkboxes in <tbody>
+        selectall.onclick = function () {
+            for(var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = this.checked;
+            }
+        };
+
+        for(var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].onclick = function () {
+                var flag = true;
+                for(var i = 0; i < checkboxes.length; i++) {
+                    if (!checkboxes[i].checked) {
+                        flag = false;
+                        break;
+                    }
+                }
+                selectall.checked = flag;
+            }
+        }
+
+
+    </script>
+{% endblock %}

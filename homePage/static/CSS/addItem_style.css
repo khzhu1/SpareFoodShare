@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,600&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+/*body{*/
+/*  height: 100vh;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  padding: 10px;*/
+/*  background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);*/
+/*}*/
+.container{
+    /*padding: 3%;*/
+    max-width: 1000px;
+    width: 100%;
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+.container .title{
+    text-align: center;
+    font-size: 35px;
+    font-weight: 500;
+    position: relative;
+}
+
+.content form .item-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+form .item-details .input-box{
+  margin-bottom: 15px;
+  width: calc(100% - 20px);
+}
+form .input-box span.details{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.item-details .input-box input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+.item-details .input-box input:focus,
+.item-details .input-box input:valid{
+  border-color: #3C5A9C;
+}
+
+ form .button{
+   height: 45px;
+   margin: 35px 0
+ }
+ form .button input{
+   height: 100%;
+   width: 100%;
+   border-radius: 5px;
+   border: none;
+   color: #fff;
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   background: linear-gradient(135deg, #ffffff, #71b7e6);
+ }
+ form .button input:hover{
+  /* transform: scale(0.99); */
+  background: linear-gradient(-135deg, #ffffff, #71b7e6);
+  }
+
+ .close_icon {
+     float: right;
+ }
+
+ .upload_photo {
+     float: left;
+     margin-bottom: 10px;
+ }
+ .upload_hint {
+     float: left;
+     color: grey;
+     margin-top: 50px;
+     margin-left: 10px;
+}
+
+ .find-button {
+     font-size: 40px;
+     width: 230px;
+ }

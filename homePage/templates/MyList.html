@@ -1,0 +1,39 @@
+{% extends 'HomePage.html' %}
+{% load static %}
+        {% block css %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/myList_style.css' %}">
+        {% endblock css%}
+       
+
+            {%block content%}
+
+                {% for item in item_list %}
+                    <div class = "product_card" onclick="location.href='{% url 'viewMyItem' %}?product_id={{ item.product_id }}'">
+
+                    {% if item.product_info.product_sold %}
+                        <div class="product_img_sold">
+                            <img src="static/images/{{ item.product_image }}" width="90" height="90"/>
+                        </div>
+                        <div class="sold_icon">
+                            <img src="./static/icon/sold.png" width="90" height="90"/>
+                        </div>
+                    {% else %}
+                        <div class="product_img">
+                            <img src="static/images/{{ item.product_image }}" width="90" height="90"/>
+                        </div>
+                    {% endif %}
+
+                    <div class="product_info">
+
+                        <div class="product_title">
+                            <p>{{ item.product_info.product_name }}</p>
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+        
+
+        {% endblock %}

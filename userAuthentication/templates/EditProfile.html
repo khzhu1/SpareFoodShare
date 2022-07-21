@@ -1,0 +1,64 @@
+{% extends 'HomePage.html' %}
+{% load static %}
+        {% block css %}
+            <link rel="stylesheet" href="{% static './EditProfile.css' %}">
+            <link rel="stylesheet" href="{% static './sMobileEditProfile.css' %}">
+        {% endblock css%}
+
+
+            {%block content%}
+        <div class="user_profile">
+            <div class="profile">
+                <!--  panel -->
+                <div class="panel">
+                    <!--  fixed information-->
+                    <div class="user-heading round">
+                         <div class="item-details">
+{#                            <div class="upload_user-photo">#}
+{#                                <div class="upload_user-photo">#}
+{#                                    <img id="image-preview" src="{% static 'temp1.jpg' %}" onclick="document.getElementById('fileUpload').click()" width="120" height="120"/>#}
+{#                                </div>#}
+{#                                <div class="upload_hint">#}
+{#                                    <input type="file" id="fileUpload" style="display: none" accept="image/*"/>#}
+{#                                </div>#}
+{#                            </div>#}
+                        <script type="text/javascript" src="{% static 'frame.js' %}"></script>
+                    </div>
+                        <!-- Full name -->
+                        <h1>{{ user }} </h1>
+                        <!--  Email -->
+                        <p>{{ user.email }}</p>
+                        <!-- ID  -->
+                        <p style="display: inline;">ID: {{ user.id }}</p>
+{#                        <p style="display: inline;">Type: Individual{{ user.user_type }}</p>#}
+                    </div>
+                    <div class="panel-body bio-graph-info">
+
+                    <form action="/user/edit/{{ user.id }}/account" method="post">
+                        <div class="row">
+                            <div class="bio-row">
+                                <p><span>First name: </span>
+                                <input type="text" name="first_name" value="{{ user.first_name }}" class="inputblock"> </p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Last Name:  </span>
+                                <input type="text" name="last_name" value="{{ user.last_name }}" class="inputblock"></p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Email:  </span>
+                                <input type="text" name="email" value="{{ user.email }}" class="inputblock"></p>
+                            </div>
+
+                            <div class="save-button">
+                                <p><input class="btn" type="submit" name="save" value="Save" /></p>
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+
+                </div>
+        </div>
+        {% endblock %}

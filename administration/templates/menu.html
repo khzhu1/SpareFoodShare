@@ -1,0 +1,10 @@
+<div class="col-sm-3 col-md-2 sidebar">
+  <ul class="nav nav-sidebar">
+    <li class="{{ userManagement }}"><a href="{% url 'userManagement' %}">User Management<span class="sr-only">(current)</span></a></li>
+    <li class="{{ productManagement }}"><a href="{% url 'productManagement' %}">Product Management</a></li>
+    <li class="{{ orderManagement }}"><a href="{% url 'orderManagement' %}">Order Management</a></li>
+    <li class="{{ dashboard }}"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+{#    <li class=""><a href="https://v3.bootcss.com/examples/dashboard/#">Others</a></li>#}
+  </ul>
+
+</div>

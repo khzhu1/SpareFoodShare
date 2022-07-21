@@ -1,0 +1,109 @@
+{% extends 'HomePage.html' %}
+{% load static %}
+        {% block css %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/myList_style.css' %}">
+            <link rel="stylesheet" type="text/css" href="../static/CSS/detail.css">
+            <link rel="stylesheet" type="text/css" href="../static/CSS/sDvice_detail.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock css%}
+
+
+            {%block content%}
+            <div class = "product_card_detail" >
+                <div class="close_icon">
+                <i class="fa fa-arrow-left fa-lg" aria-hidden="true" onclick="location.href='{% url 'homePage' %}'">  back</i>
+                    <br>
+                </div>
+                <div class="product_img_detail">
+                    <img src="static/images/{{ product.product_image }}" width="450" height="450"/>
+                </div>
+                <div class="product_info_detail">
+                    <div class="product_title_detail">
+                        <p>{{ product.product_info.product_name }}</p>
+                    </div>
+
+                    <div class="product_feature_detail">
+                        <div class="feature_info_detail price_detail">
+                            <p>£ {{ product.product_info.product_price }}</p>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="product_feature_detail">
+                        <div class="feature_info_detail">
+                            <p><strong>Seller: </strong>{{ product.product_info.user_name }}</p>
+                        </div>
+                    </div>
+
+                    <div class="space_detail">
+                        <p>&nbsp;&nbsp;</p>
+                    </div>
+
+                    <br>
+
+                    <div class="product_feature_detail">
+                        <div class="feature_info_detail">
+                            <p><strong>Pickup address: </strong>{{ product.product_info.product_location }}</p>
+                        </div>
+                    </div>
+
+                    <div class="space_detail">
+                        <p>&nbsp;&nbsp;</p>
+                    </div>
+
+                    <br>
+
+                    <div class="product_feature_detail">
+                        <div class="feature_info_detail">
+                            <p><strong>Best Before: </strong>{{ product.product_info.product_expiryDate }}</p>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="product_feature_detail">
+                        <div class="feature_info_detail">
+                            <p class="description_detail">Description:</p>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="product_feature_detail">
+                        <div class="feature_info_detail content_detail">
+                            <p>{{ product.product_info.product_details }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="product_feature_detail">
+                        <div class="feature_info_detail" >
+
+                            <!-- a button to entering buy item page -->
+                            <a href={% url 'payment' id=product.product_id %}>
+                                <button id="btn_buy" class="btn_buy_detail">Buy Me</button>
+                            </a>
+                            <!-- a button to entering chat page -->
+                            <a href={% url 'chatPage' username=product.product_info.user_name %}>
+                                <button id="btn_chat" class="btn_chat_detail">Chat with seller</button>
+                            </a>
+                            <!-- a button to see the map of seller's location -->
+                            <a href="https://maps.google.com/maps?q={{product.product_info.product_location}}" target="_blank">
+                                <button class="btn_map_detail">See the location</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <script>
+            var product_id = '{{ product.product_info.user_id }}';
+            if (product_id === '{{ user.id }}') {
+                document.getElementById("btn_chat").style.display = "none";
+                document.getElementById("btn_buy").style.display = "none";
+            }
+        </script>
+        {% endblock %}
